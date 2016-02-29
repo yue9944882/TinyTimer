@@ -17,6 +17,8 @@ import java.io.IOException;
  * Created by min.jin on 2016/2/26.
  */
 
+
+@Deprecated
 public class URLChecker implements Runnable {
 
     private Client client;
