@@ -41,7 +41,8 @@ public class ControllerSingleton extends AbstractLifecycleComponent<ControllerSi
         System.out.println("Plugin Started..");
         logger.info("Plugin Started..");
         /** Starting Monitoring Thread **/
-
+        MonitorThread monitorThread = new MonitorThread();
+        monitorThread.start();
         /** Strap & Wait until monitor expire **/
         try{
             latch.await();
@@ -54,7 +55,6 @@ public class ControllerSingleton extends AbstractLifecycleComponent<ControllerSi
     protected void doStop() throws ElasticsearchException {
         System.out.println("Plugin Stopped..");
         logger.info("Plugin Stopped..");
-
 
     }
 

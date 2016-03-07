@@ -124,11 +124,11 @@
         <!--</dependency>-->
 
 
-        <!--<dependency>-->
-            <!--<groupId>org.apache.httpcomponents</groupId>-->
-            <!--<artifactId>httpclient</artifactId>-->
-            <!--<version>${httpclient.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>log4j</groupId>
@@ -178,17 +178,17 @@
             <!--<version>3.4.0</version>-->
         <!--</dependency>-->
 
-        <!--<dependency>-->
-            <!--<artifactId>jackson-mapper-asl</artifactId>-->
-            <!--<groupId>org.codehaus.jackson</groupId>-->
-            <!--<version>${jackson-mapper-asl.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <groupId>org.codehaus.jackson</groupId>
+            <version>${jackson-mapper-asl.version}</version>
+        </dependency>
 
-        <!--<dependency>-->
-            <!--<artifactId>jackson-core-asl</artifactId>-->
-            <!--<groupId>org.codehaus.jackson</groupId>-->
-            <!--<version>${jackson-core-asl.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <artifactId>jackson-core-asl</artifactId>
+            <groupId>org.codehaus.jackson</groupId>
+            <version>${jackson-core-asl.version}</version>
+        </dependency>
 
         <!--<dependency>-->
             <!--<groupId>org.springframework</groupId>-->
