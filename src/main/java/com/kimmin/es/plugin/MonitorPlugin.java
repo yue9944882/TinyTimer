@@ -37,7 +37,6 @@ public class MonitorPlugin extends Plugin{
     @Override
     public String name(){
         return PLUGIN_NAME;
-
     }
 
     @Override

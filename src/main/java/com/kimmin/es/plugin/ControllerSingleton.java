@@ -10,6 +10,8 @@ import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
 
+import java.util.concurrent.CountDownLatch;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -23,6 +25,7 @@ public class ControllerSingleton extends AbstractLifecycleComponent<ControllerSi
     private final Environment environment;
     private final ESLogger logger;
 
+    public static CountDownLatch latch = new CountDownLatch(1);
     //private Controller controller;
 
     @Inject
@@ -37,12 +40,22 @@ public class ControllerSingleton extends AbstractLifecycleComponent<ControllerSi
     protected void doStart() throws ElasticsearchException{
         System.out.println("Plugin Started..");
         logger.info("Plugin Started..");
+        /** Starting Monitoring Thread **/
+
+        /** Strap & Wait until monitor expire **/
+        try{
+            latch.await();
+        }catch (InterruptedException ie){
+            ie.printStackTrace();
+        }
     }
 
     @Override
     protected void doStop() throws ElasticsearchException {
         System.out.println("Plugin Stopped..");
         logger.info("Plugin Stopped..");
+
+
     }
 
     @Override
