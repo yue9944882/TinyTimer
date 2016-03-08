@@ -11,9 +11,11 @@ import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
 import org.elasticsearch.action.admin.cluster.stats.ClusterStatsIndices;
 import org.elasticsearch.action.admin.cluster.stats.ClusterStatsResponse;
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.collect.HppcMaps;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.transport.TransportService;
 import org.junit.Test;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -40,15 +42,32 @@ public class QueryTest extends SampleTestCase{
 //            }
 //        }
 
-        ClusterStatsResponse response = client.admin().cluster().prepareClusterStats()
-                .execute().actionGet();
-        ClusterHealthStatus health = response.getStatus();
+
+
+
+        //org.elasticsearch.action.bulk.TransportBulkAction
+
 
     }
 
     @Test
+    public void showAllIndices(){
+//        ClusterStatsResponse responses = client.admin().cluster().prepareClusterStats()
+//                .execute().actionGet();
+//        responses.getIndicesStats();
+        GetIndexResponse response = client.admin().indices().prepareGetIndex()
+                .execute().actionGet();
+        String[] names = response.getIndices();///Index Names
+        for(String name: names){
+            System.out.println(name);
+        }
+    }
+
+
+    @Test
     public void test(){
         System.out.println("test");
+        TransportService transportService = null;
     }
 
     @Test
@@ -71,7 +90,12 @@ public class QueryTest extends SampleTestCase{
             ioe.printStackTrace();
         }
 
+    }
 
+    @Test
+    public void bulkTest(){
+//        BulkResponse response = client.prepareBulk()
+//                .add()..
     }
 
 }

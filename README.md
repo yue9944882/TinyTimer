@@ -11,12 +11,14 @@ A DIY plugin for Elastic Search
     1.1 参数线程安全
     1.2 计算过程Overlap
 
+
 2. 邮件 （单例服务）
 
     2.1 异步邮件发送 （Done）
     2.2 链式邮件任务，同时发给多人 （Done）
     2.3 邮件任务回调 （Done）
-    
+
+
 3 分析
     3.1 快照分析转储（csv）
     3.2 报警发邮件

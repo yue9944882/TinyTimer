@@ -1,6 +1,9 @@
 package com.kimmin.es.plugin;
 
+import com.google.common.util.concurrent.Monitor;
+import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.network.NetworkAddress;
 import org.elasticsearch.common.settings.Settings;
@@ -11,10 +14,9 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Before;
 
 import java.net.InetSocketAddress;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created by min.jin on 2016/3/7.
@@ -70,6 +72,14 @@ public class SampleTestCase extends ESIntegTestCase {
 
             bulk.setRefresh(true).execute().actionGet();
         }
+
+        for(int i=0;i<10;i++){
+            Date date = new Date(System.currentTimeMillis()-i* MonitorServerStatus.MILLISEC_PER_DAY);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd");
+            CreateIndexResponse response = client.admin().indices().prepareCreate("day"+i)
+                    .execute().actionGet();
+        }
+
         ensureGreen(INDEX_NAME);
 
         InetSocketAddress endpoint = randomFrom(cluster().httpAddresses());

@@ -6,11 +6,11 @@ package com.kimmin.es.plugin;
  */
 public class MonitorInterval {
 
-    public final static int CHECK_PER_SECOND = 1000;
-    public final static int CHECK_PER_MINUTE = 60*1000;
-    public final static int CHECK_PER_HOUR = 60*60*1000;
+    public final static long CHECK_PER_SECOND = 1000;
+    public final static long CHECK_PER_MINUTE = 60*1000;
+    public final static long CHECK_PER_HOUR = 60*60*1000;
 
-    private volatile static int checkInterval = CHECK_PER_SECOND;
+    private volatile static long checkInterval = CHECK_PER_SECOND;
 
     public synchronized static void setCheckInterval(int millisecond) {
         if (millisecond > CHECK_PER_SECOND
@@ -19,7 +19,7 @@ public class MonitorInterval {
         }
     }
 
-    public static int getCheckInterval(){
+    public static long getCheckInterval(){
         return checkInterval;
     }
 

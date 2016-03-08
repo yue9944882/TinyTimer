@@ -19,14 +19,20 @@ public class MonitorThread extends Thread{
 
     @Override
     public void run(){
-//        while(bRun){
-//            if(System.currentTimeMillis() % MonitorInterval.getCheckInterval()== 0){
-//                /** Check Servers' Status **/
-//                client.admin().cluster().prepareClusterStats();
-//
-//
-//            }
-//        }
+        while(bRun){
+            try{
+                /** Sleep & Check **/
+                Thread.currentThread().sleep(MonitorInterval.getCheckInterval());
+                System.out.println("Self-Checking!");
+                MonitorServerStatus.getInstance().selfCheck();
+            }catch (InterruptedException ie){
+                ie.printStackTrace();
+            }catch (Throwable throwable){
+                /** In case cluster went wrong **/
+                throwable.printStackTrace();
+                Thread.currentThread().destroy();
+            }
+        }
 
 
         /** Shutdown plugin **/
