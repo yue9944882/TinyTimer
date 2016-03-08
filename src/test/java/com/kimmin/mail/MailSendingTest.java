@@ -3,7 +3,7 @@ package com.kimmin.mail;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.kimmin.es.plugin.MonitorServerStatus;
+//import com.kimmin.es.plugin.MonitorServerStatus;
 import org.junit.Test;
 
 import java.io.File;
@@ -43,9 +43,13 @@ public class MailSendingTest {
 
     }
 
+//    @Test
+//    public void anotherTest(){
+//        MonitorServerStatus.getInstance().sendClusterStatusMail();
+//    }
     @Test
-    public void anotherTest(){
-        MonitorServerStatus.getInstance().sendClusterStatusMail();
+    public void testClassLoader(){
+
     }
 
 }

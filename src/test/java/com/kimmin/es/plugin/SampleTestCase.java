@@ -1,6 +1,8 @@
 package com.kimmin.es.plugin;
 
 import com.google.common.util.concurrent.Monitor;
+import com.kimmin.es.plugin.tiny.TinyMonitorPlugin;
+import com.kimmin.es.plugin.tiny.var.TimeDef;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
@@ -38,7 +40,7 @@ public class SampleTestCase extends ESIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins(){
-        return Arrays.<Class<? extends Plugin>> asList(MonitorPlugin.class);
+        return Arrays.<Class<? extends Plugin>> asList(TinyMonitorPlugin.class);
     }
 
     protected final static String INDEX_NAME = "test";
@@ -76,7 +78,7 @@ public class SampleTestCase extends ESIntegTestCase {
 
 
         for(int i=0;i<10;i++){
-            Date date = new Date(System.currentTimeMillis()-i* MonitorServerStatus.MILLISEC_PER_DAY);
+            Date date = new Date(System.currentTimeMillis()-i* TimeDef.MILLI_PER_DAY);
             SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd");
             CreateIndexResponse response = client.admin().indices().prepareCreate("clog_index_"+format.format(date))
                     .execute().actionGet();
