@@ -3,6 +3,7 @@ package com.kimmin.mail;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.kimmin.es.plugin.MonitorServerStatus;
 import org.junit.Test;
 
 import java.io.File;
@@ -21,7 +22,7 @@ public class MailSendingTest {
 
         Map<String, Object> dom = new HashMap<String, Object>();
         dom.put("name","kimmin");
-        MailSendTask task = new MailSendTask(new File("d:\\template"),"tmp.ftl",dom,"ctripmailbot@126.com","yue9944882@126.com");
+        MailSendTask task = new MailSendTask(new File("classpath:resources"),"tmp.ftl",dom,"ctripmailbot@126.com","yue9944882@126.com");
         task.setConfiguration("smtp.126.com","ctripmailbot","ctrip123456");
         ListenableFuture future = MailSendService.getInstance().provideTask(task);
         Futures.addCallback(future, new FutureCallback() {
@@ -40,6 +41,11 @@ public class MailSendingTest {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void anotherTest(){
+        MonitorServerStatus.getInstance().sendClusterStatusMail();
     }
 
 }

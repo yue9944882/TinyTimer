@@ -28,13 +28,10 @@ public class MonitorThread extends Thread{
             }catch (Throwable throwable){
                 /** In case cluster went wrong **/
                 throwable.printStackTrace();
-                Thread.currentThread().destroy();
+                bRun = false;
             }
         }
 
-
-        /** Shutdown plugin **/
-        ControllerSingleton.latch.countDown();
     }
 
 }

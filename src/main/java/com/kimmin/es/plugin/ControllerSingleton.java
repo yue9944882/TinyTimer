@@ -68,7 +68,7 @@ public class ControllerSingleton extends AbstractLifecycleComponent<ControllerSi
     protected void doStop() throws ElasticsearchException {
         System.out.println("Monitor Start Complete!");
         logger.info("Plugin Stopped..");
-        MonitorServerStatus.getInstance().monitorThread.destroy();
+        MonitorServerStatus.getInstance().monitorThread.bRun = false;
     }
 
     @Override

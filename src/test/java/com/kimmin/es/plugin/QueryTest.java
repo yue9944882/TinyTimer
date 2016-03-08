@@ -67,7 +67,7 @@ public class QueryTest extends SampleTestCase{
 
         GetIndexResponse response2 = client.admin().indices().prepareGetIndex()
                 .execute().actionGet();
-        String[] names2 = response.getIndices();///Index Names
+        String[] names2 = response2.getIndices();///Index Names
         for(String name: names2){
             System.out.println(name);
         }
