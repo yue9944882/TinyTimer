@@ -23,10 +23,8 @@ public class MonitorThread extends Thread{
             try{
                 /** Sleep & Check **/
                 Thread.currentThread().sleep(MonitorInterval.getCheckInterval());
-                System.out.println("Self-Checking!");
+                //System.out.println("Self-Checking!");
                 MonitorServerStatus.getInstance().selfCheck();
-            }catch (InterruptedException ie){
-                ie.printStackTrace();
             }catch (Throwable throwable){
                 /** In case cluster went wrong **/
                 throwable.printStackTrace();

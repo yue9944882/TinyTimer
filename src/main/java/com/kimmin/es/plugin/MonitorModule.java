@@ -10,7 +10,7 @@ public class MonitorModule extends AbstractModule{
     @Override
     protected void configure(){
         bind(ControllerSingleton.class).asEagerSingleton();
-        bind(FakeRestHandler.class).asEagerSingleton();
+        bind(MonitorRestHandler.class).asEagerSingleton();
     }
 
 }

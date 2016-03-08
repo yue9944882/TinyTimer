@@ -55,12 +55,23 @@ public class QueryTest extends SampleTestCase{
 //        ClusterStatsResponse responses = client.admin().cluster().prepareClusterStats()
 //                .execute().actionGet();
 //        responses.getIndicesStats();
+
         GetIndexResponse response = client.admin().indices().prepareGetIndex()
                 .execute().actionGet();
         String[] names = response.getIndices();///Index Names
         for(String name: names){
             System.out.println(name);
         }
+
+        MonitorServerStatus.getInstance().delete_7_day_ago_index();
+
+        GetIndexResponse response2 = client.admin().indices().prepareGetIndex()
+                .execute().actionGet();
+        String[] names2 = response.getIndices();///Index Names
+        for(String name: names2){
+            System.out.println(name);
+        }
+
     }
 
 

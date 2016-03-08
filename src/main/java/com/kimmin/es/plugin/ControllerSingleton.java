@@ -52,41 +52,23 @@ public class ControllerSingleton extends AbstractLifecycleComponent<ControllerSi
     @Override
     protected void doStart() throws ElasticsearchException{
         System.out.println("Plugin Started..");
-        logger.info("Plugin Started..");
+        logger.info("Monitor Plugin Starter ..");
 
+        /** Prepare a client instance for Status singleton **/
         MonitorServerStatus.getInstance().setClient(client);
 
-//        IndicesAdminClient admin = client.admin().indices();
-//        GetIndexRequestBuilder builder = admin.prepareGetIndex();
-//        ListenableActionFuture<GetIndexResponse> future = builder.execute();
-//        GetIndexResponse response = future.actionGet();
-//        String[] names = response.getIndices();///Index Names
-//        for(String name: names){
-//            System.out.println(name);
-//        }
-
+        /** Let Status singleton handle monitor thread **/
         /** Starting Monitoring Thread **/
-        MonitorThread monitorThread = new MonitorThread();
-        monitorThread.start();
-//        /** Strap & Wait until monitor expire **/
-//        try{
-//            latch.await();
-//        }catch (InterruptedException ie){
-//            ie.printStackTrace();
-//        }
+        MonitorServerStatus.getInstance().monitorThread = new MonitorThread();
+        MonitorServerStatus.getInstance().monitorThread.start();
 
-        GetIndexResponse response2 = client.admin().indices().prepareGetIndex()
-                .execute().actionGet();
-        String[] names2 = response2.getIndices();///Index Names
-        for(String name: names2){
-            System.out.println(name);
-        }
     }
 
     @Override
     protected void doStop() throws ElasticsearchException {
-        System.out.println("Plugin Stopped..");
+        System.out.println("Monitor Start Complete!");
         logger.info("Plugin Stopped..");
+        MonitorServerStatus.getInstance().monitorThread.destroy();
     }
 
     @Override

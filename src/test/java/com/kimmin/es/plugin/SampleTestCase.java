@@ -70,15 +70,18 @@ public class SampleTestCase extends ESIntegTestCase {
                             .field("content", "")
                             .endObject()));
 
+
             bulk.setRefresh(true).execute().actionGet();
         }
+
 
         for(int i=0;i<10;i++){
             Date date = new Date(System.currentTimeMillis()-i* MonitorServerStatus.MILLISEC_PER_DAY);
             SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd");
-            CreateIndexResponse response = client.admin().indices().prepareCreate("day"+i)
+            CreateIndexResponse response = client.admin().indices().prepareCreate("clog_index_"+format.format(date))
                     .execute().actionGet();
         }
+
 
         ensureGreen(INDEX_NAME);
 
