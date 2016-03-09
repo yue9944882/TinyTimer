@@ -17,7 +17,7 @@ public class SnapshotTask extends AbstractTask {
         this.taskName = "snapshot_task";
         this.actualTask = new CycleTimingTask(new Runnable() {
             public void run() {
-                AnalyzeService.getInstance().snapshot("");// Using default 9200 port
+                AnalyzeService.getInstance().snapshot("19300");// Using default 9200 port
             }
         },this.taskName, TimeDef.MILLI_PER_SECOND);
     }

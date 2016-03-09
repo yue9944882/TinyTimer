@@ -66,9 +66,11 @@ public class RegisterService {
             if(enabled){
                 /** Just do nothing here **/
             }else{
+                RegisterService.getInstance().enableMap.put(taskName, true);
                 TimingManager.getInstance().startTask(taskName);
             }
         }else{
+            RegisterService.getInstance().enableMap.put(taskName, false);
             RegisterService.getInstance().enableTask(taskName);
         }
     }

@@ -8,6 +8,8 @@ import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.logging.ESLogger;
 import org.elasticsearch.common.logging.Loggers;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by kimmin on 3/8/16.
  */
@@ -29,7 +31,7 @@ public class CycleTimingTask implements Runnable{
 
     }
 
-    public void run(){
+    public void run() {
         oneTimeTask.run();
     }
 

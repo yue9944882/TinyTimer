@@ -21,9 +21,7 @@ public class AnalyzeHandler implements RestHandler {
     }
 
     public void handleRequest(final RestRequest restRequest, final RestChannel channel){
-
         AnalyzeService.getInstance().analyzeLogQueue();
-
         try{
             channel.sendResponse(new BytesRestResponse(RestStatus.OK,"image/png",ManyUtil.mapFileToByteArray(ManyUtil.TMP_PNG_FILE_NAME)));
         }catch (IOException ioe){

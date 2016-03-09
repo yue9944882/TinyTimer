@@ -1,7 +1,9 @@
 package com.kimmin.es.plugin;
 
 import com.kimmin.es.plugin.tiny.TinyTimerComponent;
+import com.kimmin.es.plugin.tiny.exception.NoSuchTaskException;
 import com.kimmin.es.plugin.tiny.service.AnalyzeService;
+import com.kimmin.es.plugin.tiny.service.RegisterService;
 import com.kimmin.es.plugin.tiny.var.ClusterStatus;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,8 +17,11 @@ import org.elasticsearch.action.admin.cluster.stats.ClusterStatsIndices;
 import org.elasticsearch.action.admin.cluster.stats.ClusterStatsResponse;
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.collect.HppcMaps;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.transport.TransportService;
 import org.junit.Test;
@@ -137,8 +142,31 @@ public class QueryTest extends SampleTestCase{
     }
 
     @Test
-    public void testSnapshot(){
-        AnalyzeService.getInstance().snapshot("");
+    public void testSnapshot() throws NoSuchTaskException, InterruptedException {
+
+        RegisterService.latch.await();
+
+        RegisterService.getInstance().enableTask("snapshot_task");
+        /** Wating five sec **/
+
+        for(int i=0;i<100;i++){
+            try {
+                IndexResponse response = client.prepareIndex("test", "snap", "val" + i)
+                        .setSource(XContentFactory.jsonBuilder()
+                                .startObject()
+                                .field("123", "hahah")
+                                .endObject())
+                        .execute().actionGet();
+                if(response.isCreated())System.out.println("YES");
+            }catch (IOException ioe){
+                ioe.printStackTrace();
+            }
+        }
+
+        testHandler();
     }
+
+
+
 
 }

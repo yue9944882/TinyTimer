@@ -29,21 +29,8 @@ public class TimingManager {
     private ScheduledExecutorService service = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
 
     public void startTask(String taskName) throws NoSuchTaskException{
-        CycleTimingTask task = RegisterService.getInstance().getTaskByName(taskName);
-        Boolean enabled = RegisterService.getInstance().getTaskStatusByName(taskName);
-        while(enabled != null && enabled == true) {
-            ScheduledFuture future = service.schedule(task, task.milliDelay, TimeUnit.MILLISECONDS);
-            try{
-                future.get();
-            }catch (ExecutionException ee){
-                ee.printStackTrace();
-                future.cancel(true);
-            }catch (InterruptedException ie){
-                ie.printStackTrace();
-                future.cancel(true);
-            }
-            enabled = RegisterService.getInstance().getTaskStatusByName(taskName);
-        }
+        Runner runner = new Runner(taskName);
+        new Thread(runner).start();
     }
 
     public void shutdown(){
@@ -64,4 +51,33 @@ public class TimingManager {
         return !service.isShutdown();
     }
 
+    private class Runner implements Runnable{
+        public Runner(String taskName){
+            this.taskName = taskName;
+        }
+        private String taskName;
+        public void run(){
+            try{
+                CycleTimingTask task = RegisterService.getInstance().getTaskByName(taskName);
+                Boolean enabled = RegisterService.getInstance().getTaskStatusByName(taskName);
+                while(enabled != null && enabled == true) {
+                    ScheduledFuture future = service.schedule(task, task.milliDelay, TimeUnit.MILLISECONDS);
+                    try{
+                        future.get();
+                    }catch (ExecutionException ee){
+                        ee.printStackTrace();
+                        future.cancel(true);
+                    }catch (InterruptedException ie){
+                        ie.printStackTrace();
+                        future.cancel(true);
+                    }
+                    enabled = RegisterService.getInstance().getTaskStatusByName(taskName);
+                }
+            }catch (Throwable e){
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
+

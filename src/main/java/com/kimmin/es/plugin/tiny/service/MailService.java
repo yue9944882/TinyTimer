@@ -46,6 +46,8 @@ public class MailService {
     }
 
     public void sendTo(String destination, MailLevel level, MailDom dom) throws NullPointerException {
+        /** You cannot do anything if you havent configured your mail **/
+        if(!configured) return;
 
         String ftlPath = MailService.class.getClassLoader().getResource(level.getLevel()+".ftl").getPath();
         File ftlFile = new File(ftlPath);

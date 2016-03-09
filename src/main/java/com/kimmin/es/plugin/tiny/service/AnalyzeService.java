@@ -4,6 +4,7 @@ import com.kimmin.es.plugin.tiny.TinyTimerComponent;
 import com.kimmin.es.plugin.tiny.mail.MailDom;
 import com.kimmin.es.plugin.tiny.mail.MailLevel;
 import com.kimmin.es.plugin.tiny.thread.TimingManager;
+import com.kimmin.es.plugin.tiny.util.ManyUtil;
 import com.kimmin.es.plugin.tiny.var.ClusterStatus;
 import com.kimmin.es.plugin.tiny.var.Log;
 import com.kimmin.es.plugin.tiny.var.LogQueue;
@@ -61,16 +62,16 @@ public class AnalyzeService {
                 Map map = om.readValue(respEntity.getContent(), Map.class);
                 /** Squeeze data **/
                 Map primaryMap = ((Map)((Map)map.get("_all")).get("primaries"));
-                double index_time = Double.parseDouble((String)((Map)primaryMap.get("indexing"))
-                        .get("index_time_in_millis"));
-                double search_time = Double.parseDouble((String)((Map)primaryMap.get("search"))
-                        .get("query_time_in_millis"));
+                double index_time = Double.parseDouble(((Map)primaryMap.get("indexing"))
+                        .get("index_time_in_millis").toString());
+                double search_time = Double.parseDouble(((Map)primaryMap.get("search"))
+                        .get("query_time_in_millis").toString());
                 double merge_time = Double.parseDouble((String)((Map)primaryMap.get("merges"))
-                        .get("total_time_in_millis"));
-                double refresh_time = Double.parseDouble((String)((Map)primaryMap.get("refresh"))
-                        .get("total_time_in_millis"));
-                double flush_time = Double.parseDouble((String)((Map)primaryMap.get("flush"))
-                        .get("total_time_in_millis"));
+                        .get("total_time_in_millis").toString());
+                double refresh_time = Double.parseDouble(((Map)primaryMap.get("refresh"))
+                        .get("total_time_in_millis").toString());
+                double flush_time = Double.parseDouble(((Map)primaryMap.get("flush"))
+                        .get("total_time_in_millis").toString());
                 Log log = new Log(index_time,search_time,merge_time,refresh_time,flush_time);
                 queue.addNew(log);
             }
@@ -119,18 +120,20 @@ public class AnalyzeService {
     public void analyzeLogQueue(){
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         Iterator<Log> iter = queue.blockingQueue.iterator();
+        Integer i = 0;
         while(iter.hasNext()){
             Log log = iter.next();
-            dataset.addValue(log.search_time, "searchTime", "");
-            dataset.addValue(log.merge_time, "merge_time", "");
-            dataset.addValue(log.index_time, "index_time", "");
-            dataset.addValue(log.refresh_time, "refresh_time", "");
-            dataset.addValue(log.flush_time, "flush_time", "");
+            dataset.addValue(log.search_time, "searchTime", "" + i);
+            dataset.addValue(log.merge_time, "merge_time", "" + i);
+            dataset.addValue(log.index_time, "index_time", "" + i);
+            dataset.addValue(log.refresh_time, "refresh_time", "" + i);
+            dataset.addValue(log.flush_time, "flush_time", "" + i);
+            i++;
         }
         JFreeChart jFreeChart = ChartFactory.createLineChart("ANALYZE","Category","Time",
                 dataset, PlotOrientation.VERTICAL, true, true, false);
         try{
-            ChartUtilities.saveChartAsPNG(new File("tmp.png"), jFreeChart, 800, 800);
+            ChartUtilities.saveChartAsPNG(new File(ManyUtil.TMP_PNG_FILE_NAME), jFreeChart, 800, 800);
         }catch (IOException ioe){
             ioe.printStackTrace();
         }
