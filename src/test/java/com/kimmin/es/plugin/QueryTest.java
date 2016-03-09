@@ -131,4 +131,9 @@ public class QueryTest extends SampleTestCase{
         }
     }
 
+    @Test
+    public void testSnapshot(){
+        AnalyzeService.getInstance().snapshot();
+    }
+
 }

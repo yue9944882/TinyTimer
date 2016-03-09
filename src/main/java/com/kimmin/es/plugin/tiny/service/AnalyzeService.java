@@ -1,6 +1,7 @@
 package com.kimmin.es.plugin.tiny.service;
 
 import com.kimmin.es.plugin.tiny.TinyTimerComponent;
+import org.elasticsearch.action.admin.cluster.stats.ClusterStatsResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 
@@ -21,11 +22,15 @@ public class AnalyzeService {
 
     /** Take Snapshot **/
     public void snapshot(){
+        ClusterStatsResponse response = TinyTimerComponent.getClient().admin().cluster().prepareClusterStats()
+                .execute().actionGet();
 
     }
+
     /** Do Pressure Test **/
     public void pressure(){
         beforePressure();
+
 
 
         afterPressure();
