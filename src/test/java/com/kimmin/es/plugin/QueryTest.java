@@ -2,6 +2,7 @@ package com.kimmin.es.plugin;
 
 import com.kimmin.es.plugin.tiny.TinyTimerComponent;
 import com.kimmin.es.plugin.tiny.service.AnalyzeService;
+import com.kimmin.es.plugin.tiny.var.ClusterStatus;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -44,8 +45,12 @@ public class QueryTest extends SampleTestCase{
 //            }
 //        }
 
+        ClusterStatsResponse response = client.admin().cluster().prepareClusterStats()
+                .execute().actionGet();
 
+        System.out.println(response.getStatus().toString());
 
+        ClusterStatus state = ClusterStatus.valueOf(response.getStatus().toString());
 
         //org.elasticsearch.action.bulk.TransportBulkAction
 
@@ -133,7 +138,7 @@ public class QueryTest extends SampleTestCase{
 
     @Test
     public void testSnapshot(){
-        AnalyzeService.getInstance().snapshot();
+        AnalyzeService.getInstance().snapshot("");
     }
 
 }

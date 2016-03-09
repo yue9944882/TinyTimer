@@ -1,5 +1,7 @@
 package com.kimmin.es.plugin.tiny;
 
+import com.kimmin.es.plugin.tiny.impl.ImplScanner;
+import com.kimmin.es.plugin.tiny.service.RegisterService;
 import com.kimmin.es.plugin.tiny.thread.TimingManager;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.client.Client;
@@ -30,14 +32,17 @@ public class TinyTimerComponent extends AbstractLifecycleComponent<TinyTimerComp
     protected void doStart() throws ElasticsearchException {
         System.out.println("Plugin Started..");
         logger.info("Monitor Plugin Starter ..");
+
+        /** Scan tasks in the classpath **/
+        ImplScanner.scanImpl();
+        RegisterService.latch.countDown();
     }
 
 
     @Override
     protected void doStop() throws ElasticsearchException {
-        System.out.println("Monitor Start Complete!");
-        logger.info("Plugin Stopped..");
-
+        System.out.println("Plugin Start Complete!");
+        logger.info("Plugin start complete..");
     }
 
     @Override

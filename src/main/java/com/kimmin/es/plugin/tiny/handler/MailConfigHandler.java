@@ -23,11 +23,17 @@ public class MailConfigHandler implements RestHandler {
     public void handleRequest(final RestRequest restRequest, final RestChannel channel){
         try{
             Map map = objectMapper.readValue(restRequest.content().toBytes(),Map.class);
-            String smtpHost = (String) map.get("host.smtp");
-            String username = (String) map.get("host.name");
-            String password = (String) map.get("host.password");
-            MailService.getInstance().setConfiguration(username, password, smtpHost);
-            channel.sendResponse(new BytesRestResponse(RestStatus.OK, "CONFIG SUCCESS!"));
+            if(restRequest.hasParam("host.smtp")
+                    && restRequest.hasParam("host.name")
+                    && restRequest.hasParam("host.password")) {
+                String smtpHost = (String) map.get("host.smtp");
+                String username = (String) map.get("host.name");
+                String password = (String) map.get("host.password");
+                MailService.getInstance().setConfiguration(username, password, smtpHost);
+                channel.sendResponse(new BytesRestResponse(RestStatus.OK, "CONFIG SUCCESS!"));
+            }else{
+                channel.sendResponse(new BytesRestResponse(RestStatus.OK, "CONFIG FAILURE! - Check param!"));
+            }
         }catch (IOException ioe){
             ioe.fillInStackTrace();
         }

@@ -27,6 +27,8 @@ public class MailService {
 
     private ESLogger logger = Loggers.getLogger(MailService.class);
 
+    private boolean configured = false;
+
     /** Singleton **/
     private MailService(){}
     private static class Singleton{
@@ -40,6 +42,7 @@ public class MailService {
         this.username = username;
         this.password = password;
         this.smtphost = smtphost;
+        this.configured = true;
     }
 
     public void sendTo(String destination, MailLevel level, MailDom dom) throws NullPointerException {

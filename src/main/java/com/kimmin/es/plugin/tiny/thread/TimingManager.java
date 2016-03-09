@@ -6,9 +6,8 @@ import com.kimmin.es.plugin.tiny.task.CycleTimingTask;
 import jdk.nashorn.internal.runtime.Timing;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Iterator;
+import java.util.concurrent.*;
 
 /**
  * Created by kimmin on 3/8/16.
@@ -31,11 +30,38 @@ public class TimingManager {
 
     public void startTask(String taskName) throws NoSuchTaskException{
         CycleTimingTask task = RegisterService.getInstance().getTaskByName(taskName);
-        service.schedule(task,task.milliDelay,TimeUnit.MILLISECONDS);
+        Boolean enabled = RegisterService.getInstance().getTaskStatusByName(taskName);
+        while(enabled != null && enabled == true) {
+            ScheduledFuture future = service.schedule(task, task.milliDelay, TimeUnit.MILLISECONDS);
+            try{
+                future.get();
+            }catch (ExecutionException ee){
+                ee.printStackTrace();
+                future.cancel(true);
+            }catch (InterruptedException ie){
+                ie.printStackTrace();
+                future.cancel(true);
+            }
+            enabled = RegisterService.getInstance().getTaskStatusByName(taskName);
+        }
     }
 
     public void shutdown(){
+        /** Disable all tasks **/
+        Iterator<String> iter = RegisterService.getInstance().statusMap().keySet().iterator();
+        while(iter.hasNext()){
+            RegisterService.getInstance().disableTask(iter.next());
+        }
+        /** Shutdown executors pool **/
         service.shutdown();
+    }
+
+    public void start(){
+        service = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
+    }
+
+    public boolean isStarted(){
+        return !service.isShutdown();
     }
 
 }

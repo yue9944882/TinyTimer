@@ -46,6 +46,14 @@ public class PlotTest {
         ChartUtilities.saveChartAsPNG(new File("/home/kimmin/chart.png"),jFreeChart,500,500);
     }
 
+    @Test
+    public void doLineTest() throws IOException{
+        JFreeChart jFreeChart = ChartFactory.createLineChart("Demo3","Cat","Val",createLineDataset(),
+                PlotOrientation.VERTICAL,true,true,false);
+        ChartUtilities.saveChartAsPNG(new File("/home/kimmin/chart.png"),jFreeChart,500,500);
+    }
+
+
     private static CategoryDataset createCatDataset()
     {
         String series1 = "First";
@@ -74,6 +82,49 @@ public class PlotTest {
         defaultcategorydataset.addValue(2D, series3, category3);
         defaultcategorydataset.addValue(3D, series3, category4);
         defaultcategorydataset.addValue(6D, series3, category5);
+        return defaultcategorydataset;
+    }
+
+    private static CategoryDataset createLineDataset()
+    {
+        String series1 = "First";
+        String series2 = "Second";
+        String series3 = "Third";
+        String type1 = "Type 1";
+        String type2 = "Type 2";
+        String type3 = "Type 3";
+        String type4 = "Type 4";
+        String type5 = "Type 5";
+        String type6 = "Type 6";
+        String type7 = "Type 7";
+        String type8 = "Type 8";
+        DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+        defaultcategorydataset.addValue(1.0D, series1, type1);
+        defaultcategorydataset.addValue(4D, series1, type2);
+        defaultcategorydataset.addValue(3D, series1, type3);
+        defaultcategorydataset.addValue(5D, series1, type4);
+        defaultcategorydataset.addValue(5D, series1, type5);
+        defaultcategorydataset.addValue(7D, series1, type6);
+        defaultcategorydataset.addValue(7D, series1, type7);
+        defaultcategorydataset.addValue(8D, series1, type8);
+
+        defaultcategorydataset.addValue(5D, series2, type1);
+        defaultcategorydataset.addValue(7D, series2, type2);
+        defaultcategorydataset.addValue(6D, series2, type3);
+        defaultcategorydataset.addValue(8D, series2, type4);
+        defaultcategorydataset.addValue(4D, series2, type5);
+        defaultcategorydataset.addValue(4D, series2, type6);
+        defaultcategorydataset.addValue(2D, series2, type7);
+        defaultcategorydataset.addValue(1.0D, series2, type8);
+
+        defaultcategorydataset.addValue(4D, series3, type1);
+        defaultcategorydataset.addValue(3D, series3, type2);
+        defaultcategorydataset.addValue(2D, series3, type3);
+        defaultcategorydataset.addValue(3D, series3, type4);
+        defaultcategorydataset.addValue(6D, series3, type5);
+        defaultcategorydataset.addValue(3D, series3, type6);
+        defaultcategorydataset.addValue(4D, series3, type7);
+        defaultcategorydataset.addValue(3D, series3, type8);
         return defaultcategorydataset;
     }
 

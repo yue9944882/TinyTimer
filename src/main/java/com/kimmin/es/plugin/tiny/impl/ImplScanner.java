@@ -90,6 +90,7 @@ public class ImplScanner {
                         AbstractTask task = (AbstractTask) clazz.newInstance();
                         RegisterService.getInstance()
                                 .register(task.getTaskName(), task.getTask());
+                        RegisterService.getInstance().disableTask(task.getTaskName());
                     }catch (Throwable e){
                         e.printStackTrace();
                     }

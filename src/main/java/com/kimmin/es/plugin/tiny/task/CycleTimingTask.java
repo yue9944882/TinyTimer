@@ -31,12 +31,6 @@ public class CycleTimingTask implements Runnable{
 
     public void run(){
         oneTimeTask.run();
-        try{
-            TimingManager.getInstance().startTask(this.taskName);
-        }catch (NoSuchTaskException e){
-            /** Maybe deleted but not unregistered **/
-            RegisterService.getInstance().unregister(taskName);
-        }
     }
 
 }

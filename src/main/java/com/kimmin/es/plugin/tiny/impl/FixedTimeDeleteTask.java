@@ -24,7 +24,7 @@ import java.util.Date;
 public class FixedTimeDeleteTask extends AbstractTask {
 
     public FixedTimeDeleteTask(){
-        taskName = "delete_at_fixed_freq";
+        taskName = "delete_freq";
         actualTask = new CycleTimingTask(
                 new Runnable() {
                     public void run() {
