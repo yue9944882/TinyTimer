@@ -34,4 +34,8 @@ public class TimingManager {
         service.schedule(task,task.milliDelay,TimeUnit.MILLISECONDS);
     }
 
+    public void shutdown(){
+        service.shutdown();
+    }
+
 }

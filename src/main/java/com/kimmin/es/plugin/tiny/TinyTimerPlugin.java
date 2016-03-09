@@ -7,7 +7,6 @@ import org.elasticsearch.common.inject.Module;
 import org.elasticsearch.common.logging.ESLogger;
 import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.monitor.MonitorModule;
 import org.elasticsearch.plugins.Plugin;
 
 import java.util.Arrays;
@@ -17,10 +16,10 @@ import java.util.Collections;
 /**
  * Created by kimmin on 3/8/16.
  */
-public class TinyMonitorPlugin extends Plugin {
+public class TinyTimerPlugin extends Plugin {
 
-    public static final String DEFAULT_ENABLED_PROPERTY_NAME = "my_monitor.enabled";
-    public static final String PLUGIN_NAME = "elasticsearch-tiny-monitor";
+    public static final String DEFAULT_ENABLED_PROPERTY_NAME = "my_timer.enabled";
+    public static final String PLUGIN_NAME = "elasticsearch-tiny-timer";
     public static final String DEFAULT_SUITE_PROPERTY_NAME = "suite";
     public static final String DEFAULT_RESOURCES_PROPERTY_NAME = "resources";
     public static final String DEFAULT_COMPONENT_SIZE_PROPERTY_NAME = "controller.pool-size";
@@ -29,7 +28,7 @@ public class TinyMonitorPlugin extends Plugin {
     private final boolean pluginEnabled;
     private final ESLogger logger;
 
-    public TinyMonitorPlugin(Settings settings){
+    public TinyTimerPlugin(Settings settings){
         this.pluginEnabled = settings.getAsBoolean(DEFAULT_ENABLED_PROPERTY_NAME,true);
         this.logger = Loggers.getLogger("plugin.my_monitor",settings);
         this.tranportClient = TransportClient.CLIENT_TYPE.equals(Client.CLIENT_TYPE_SETTING);
@@ -42,13 +41,13 @@ public class TinyMonitorPlugin extends Plugin {
 
     @Override
     public String description(){
-        return "Monitoring Elasticsearch Servers' Status..";
+        return "Timer for Elasticsearch Server..";
     }
 
     @Override
     public Collection<Module> nodeModules(){
         if(pluginEnabled && !tranportClient){
-            return Arrays.<Module>asList(new TinyMonitorModule());
+            return Arrays.<Module>asList(new TinyTimerModule());
         }else{
             return Collections.emptyList();
         }
@@ -59,7 +58,7 @@ public class TinyMonitorPlugin extends Plugin {
     public Collection<Class<? extends LifecycleComponent>> nodeServices(){
         if(pluginEnabled){
             if(!tranportClient){
-                return Arrays.<Class<? extends LifecycleComponent>>asList(TinyMonitorComponent.class);
+                return Arrays.<Class<? extends LifecycleComponent>>asList(TinyTimerComponent.class);
             }
         }else{
             logger.info("Plugin Disabled.",name());

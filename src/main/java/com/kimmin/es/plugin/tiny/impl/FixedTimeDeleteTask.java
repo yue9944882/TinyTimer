@@ -1,6 +1,8 @@
 package com.kimmin.es.plugin.tiny.impl;
 
-import com.kimmin.es.plugin.tiny.TinyMonitorComponent;
+import com.kimmin.es.plugin.tiny.TinyTimerComponent;
+import com.kimmin.es.plugin.tiny.annotation.Task;
+import com.kimmin.es.plugin.tiny.task.AbstractTask;
 import com.kimmin.es.plugin.tiny.task.CycleTimingTask;
 import com.kimmin.es.plugin.tiny.var.TimeDef;
 
@@ -17,7 +19,9 @@ import java.util.Date;
  *  Just ignore it
  * **/
 
-public class FixedTimeDeleteTask {
+
+@Task
+public class FixedTimeDeleteTask extends AbstractTask {
 
     public FixedTimeDeleteTask(){
         taskName = "delete_at_fixed_freq";
@@ -28,7 +32,7 @@ public class FixedTimeDeleteTask {
                         SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd");
                         String dateSuffix = format.format(
                                 new Date(System.currentTimeMillis()-7*TimeDef.MILLI_PER_DAY));
-                        TinyMonitorComponent.getClient().admin().indices().prepareCreate(
+                        TinyTimerComponent.getClient().admin().indices().prepareCreate(
                                 "clog_index_" + dateSuffix
                         ).execute().actionGet();
                     }
@@ -39,10 +43,12 @@ public class FixedTimeDeleteTask {
     private CycleTimingTask actualTask;
     private final String taskName;
 
+    @Override
     public CycleTimingTask getTask(){
         return actualTask;
     }
 
+    @Override
     public String getTaskName(){
         return taskName;
     }

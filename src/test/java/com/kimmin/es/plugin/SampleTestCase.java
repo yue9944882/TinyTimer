@@ -1,11 +1,9 @@
 package com.kimmin.es.plugin;
 
-import com.google.common.util.concurrent.Monitor;
-import com.kimmin.es.plugin.tiny.TinyMonitorPlugin;
+import com.kimmin.es.plugin.tiny.TinyTimerPlugin;
 import com.kimmin.es.plugin.tiny.var.TimeDef;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.network.NetworkAddress;
 import org.elasticsearch.common.settings.Settings;
@@ -18,7 +16,6 @@ import org.junit.Before;
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.SimpleFormatter;
 
 /**
  * Created by min.jin on 2016/3/7.
@@ -40,7 +37,7 @@ public class SampleTestCase extends ESIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins(){
-        return Arrays.<Class<? extends Plugin>> asList(TinyMonitorPlugin.class);
+        return Arrays.<Class<? extends Plugin>> asList(TinyTimerPlugin.class);
     }
 
     protected final static String INDEX_NAME = "test";

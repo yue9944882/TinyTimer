@@ -1,5 +1,6 @@
 package com.kimmin.es.plugin.tiny;
 
+import com.kimmin.es.plugin.tiny.thread.TimingManager;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.SuppressForbidden;
@@ -8,23 +9,20 @@ import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.logging.ESLogger;
 import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.env.Environment;
-
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by kimmin on 3/8/16.
  */
-public class TinyMonitorComponent extends AbstractLifecycleComponent<TinyMonitorComponent> {
+public class TinyTimerComponent extends AbstractLifecycleComponent<TinyTimerComponent> {
 
     private final ESLogger logger;
     private static Client client;
 
     @Inject
-    public TinyMonitorComponent(Settings settings, Client client){
+    public TinyTimerComponent(Settings settings, Client client){
         super(settings);
         this.logger = Loggers.getLogger("plugin.tiny_monitor",settings);
-        this.client = client;
+        TinyTimerComponent.client = client;
     }
 
     @SuppressForbidden(reason = "Unknown Reason..")
@@ -44,7 +42,7 @@ public class TinyMonitorComponent extends AbstractLifecycleComponent<TinyMonitor
 
     @Override
     protected void doClose() throws ElasticsearchException {
-
+        TimingManager.getInstance().shutdown();
     }
 
     public static Client getClient(){
