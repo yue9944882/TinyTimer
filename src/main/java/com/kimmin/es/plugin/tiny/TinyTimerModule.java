@@ -1,6 +1,9 @@
 package com.kimmin.es.plugin.tiny;
 
 import com.kimmin.es.plugin.tiny.handler.DisableConfigHandler;
+import com.kimmin.es.plugin.tiny.handler.EnableConfigHandler;
+import com.kimmin.es.plugin.tiny.handler.MailConfigHandler;
+import com.kimmin.es.plugin.tiny.handler.SelfPressureHandler;
 import org.elasticsearch.common.inject.AbstractModule;
 
 /**
@@ -12,9 +15,11 @@ public class TinyTimerModule extends AbstractModule {
     protected void configure(){
         /** Bind Component **/
         bind(TinyTimerComponent.class).asEagerSingleton();
-
         /** Bind RESTful handler **/
+        bind(EnableConfigHandler.class).asEagerSingleton();
         bind(DisableConfigHandler.class).asEagerSingleton();
+        bind(MailConfigHandler.class).asEagerSingleton();
+        bind(SelfPressureHandler.class).asEagerSingleton();
     }
 
 }

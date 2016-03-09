@@ -13,7 +13,7 @@ public class DisableConfigHandler implements RestHandler{
 
     @Inject
     public DisableConfigHandler(RestController controller){
-        controller.registerHandler(RestRequest.Method.GET,"/_plugin/tiny/disable",this);
+        controller.registerHandler(RestRequest.Method.GET,"/tiny/disable",this);
     }
 
     public void handleRequest(final RestRequest restRequest, final RestChannel channel){

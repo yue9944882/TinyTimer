@@ -1,5 +1,7 @@
 package com.kimmin.es.plugin;
 
+import com.kimmin.es.plugin.tiny.TinyTimerComponent;
+import com.kimmin.es.plugin.tiny.service.AnalyzeService;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -91,9 +93,6 @@ public class QueryTest extends SampleTestCase{
             HttpEntity respEntity = response.getEntity();
             if(response.getStatusLine().getStatusCode() == 200){
                 Map map = om.readValue(respEntity.getContent(),Map.class);
-                /** Do Validation **/
-                map.get("13");
-                /** Process stats **/
 
             }
 
@@ -107,6 +106,29 @@ public class QueryTest extends SampleTestCase{
     public void bulkTest(){
 //        BulkResponse response = client.prepareBulk()
 //                .add()..
+    }
+
+
+    @Test
+    public void testPressureTest(){
+        AnalyzeService.getInstance().beforePressure();
+
+        ClusterStatsResponse response = TinyTimerComponent.getClient().admin().cluster().prepareClusterStats()
+                .execute().actionGet();
+
+        System.out.println(response.toString());
+
+        AnalyzeService.getInstance().afterPressure();
+    }
+
+    @Test
+    public void testHandler() throws InterruptedException{
+        while(true){
+            Thread.currentThread().sleep(1000);
+            for(int i=1;i<100000;i++){
+                i++;
+            }
+        }
     }
 
 }

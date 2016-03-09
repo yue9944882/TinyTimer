@@ -10,7 +10,7 @@ public class EnableConfigHandler implements RestHandler{
 
     @Inject
     public EnableConfigHandler(RestController controller){
-        controller.registerHandler(RestRequest.Method.GET,"/_plugin/tiny/enable",this);
+        controller.registerHandler(RestRequest.Method.GET,"/tiny/enable",this);
     }
 
     public void handleRequest(final RestRequest restRequest, final RestChannel channel){

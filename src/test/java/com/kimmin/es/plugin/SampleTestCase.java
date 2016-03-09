@@ -86,6 +86,7 @@ public class SampleTestCase extends ESIntegTestCase {
 
         InetSocketAddress endpoint = randomFrom(cluster().httpAddresses());
         this.restBaseUrl = "http://" + NetworkAddress.formatAddress(endpoint);
+        System.out.println(restBaseUrl);
     }
 
 

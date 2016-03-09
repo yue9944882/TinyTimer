@@ -3,6 +3,7 @@ package com.kimmin.es.plugin.tiny.service;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.kimmin.es.plugin.tiny.mail.MailDom;
 import com.kimmin.es.plugin.tiny.mail.MailLevel;
 import com.kimmin.mail.MailSendService;
 import com.kimmin.mail.MailSendTask;
@@ -41,14 +42,12 @@ public class MailService {
         this.smtphost = smtphost;
     }
 
-    public void sendTo(String destination,MailLevel level) throws NullPointerException {
-        Map<String, Object> dom = new HashMap<String, Object>();
-        dom.put("info","kimmin");
+    public void sendTo(String destination, MailLevel level, MailDom dom) throws NullPointerException {
 
         String ftlPath = MailService.class.getClassLoader().getResource(level.getLevel()+".ftl").getPath();
         File ftlFile = new File(ftlPath);
         MailSendTask task = new MailSendTask(ftlFile.getParentFile(),ftlFile.getName(),
-                dom,this.username,destination);
+                dom.getActualDom(),this.username,destination);
 
         task.setConfiguration(this.smtphost,this.username,this.password);
         ListenableFuture future = MailSendService.getInstance().provideTask(task);

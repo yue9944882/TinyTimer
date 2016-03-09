@@ -17,7 +17,7 @@ public class MailConfigHandler implements RestHandler {
 
     @Inject
     public MailConfigHandler(RestController controller){
-        controller.registerHandler(RestRequest.Method.POST,"/_plugin/tiny/mail",this);
+        controller.registerHandler(RestRequest.Method.POST,"/tiny/mail",this);
     }
 
     public void handleRequest(final RestRequest restRequest, final RestChannel channel){
