@@ -18,12 +18,12 @@ import java.util.concurrent.CountDownLatch;
 public class TinyMonitorComponent extends AbstractLifecycleComponent<TinyMonitorComponent> {
 
     private final ESLogger logger;
-    private final Client client;
+    private static Client client;
 
     @Inject
     public TinyMonitorComponent(Settings settings, Client client){
         super(settings);
-        this.logger = Loggers.getLogger("plugin.my_monitor",settings);
+        this.logger = Loggers.getLogger("plugin.tiny_monitor",settings);
         this.client = client;
     }
 
@@ -45,6 +45,10 @@ public class TinyMonitorComponent extends AbstractLifecycleComponent<TinyMonitor
     @Override
     protected void doClose() throws ElasticsearchException {
 
+    }
+
+    public static Client getClient(){
+        return client;
     }
 
 }

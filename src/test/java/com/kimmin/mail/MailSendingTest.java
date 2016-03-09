@@ -4,9 +4,11 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 //import com.kimmin.es.plugin.MonitorServerStatus;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +18,8 @@ import java.util.Map;
 
 
 public class MailSendingTest {
+
+    private ObjectMapper om = new ObjectMapper();
 
     @Test
     public void simpleTest(){
@@ -48,8 +52,10 @@ public class MailSendingTest {
 //        MonitorServerStatus.getInstance().sendClusterStatusMail();
 //    }
     @Test
-    public void testClassLoader(){
-
+    public void testClassLoader() throws IOException{
+        String json = "{\"name\":\"jinmin\"}";
+        Map map = om.readValue(json.getBytes(),Map.class);
+        System.out.println((String)map.get("name"));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.kimmin.es.plugin.tiny;
 
-import com.kimmin.es.plugin.tiny.handler.ConfigHandler;
+import com.kimmin.es.plugin.tiny.handler.DisableConfigHandler;
 import org.elasticsearch.common.inject.AbstractModule;
 
 /**
@@ -14,7 +14,7 @@ public class TinyMonitorModule extends AbstractModule {
         bind(TinyMonitorComponent.class).asEagerSingleton();
 
         /** Bind RESTful handler **/
-        bind(ConfigHandler.class).asEagerSingleton();
+        bind(DisableConfigHandler.class).asEagerSingleton();
     }
 
 }

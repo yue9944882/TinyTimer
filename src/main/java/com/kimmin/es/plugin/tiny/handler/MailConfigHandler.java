@@ -1,5 +1,6 @@
 package com.kimmin.es.plugin.tiny.handler;
 
+import com.kimmin.es.plugin.tiny.service.MailService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.rest.*;
@@ -25,6 +26,7 @@ public class MailConfigHandler implements RestHandler {
             String smtpHost = (String) map.get("host.smtp");
             String username = (String) map.get("host.name");
             String password = (String) map.get("host.password");
+            MailService.getInstance().setConfiguration(username, password, smtpHost);
             channel.sendResponse(new BytesRestResponse(RestStatus.OK, "CONFIG SUCCESS!"));
         }catch (IOException ioe){
             ioe.fillInStackTrace();

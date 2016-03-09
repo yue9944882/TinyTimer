@@ -19,8 +19,8 @@ import java.util.Collections;
  */
 public class TinyMonitorPlugin extends Plugin {
 
-        public static final String DEFAULT_ENABLED_PROPERTY_NAME = "my_monitor.enabled";
-    public static final String PLUGIN_NAME = "elasticsearch-my-monitor";
+    public static final String DEFAULT_ENABLED_PROPERTY_NAME = "my_monitor.enabled";
+    public static final String PLUGIN_NAME = "elasticsearch-tiny-monitor";
     public static final String DEFAULT_SUITE_PROPERTY_NAME = "suite";
     public static final String DEFAULT_RESOURCES_PROPERTY_NAME = "resources";
     public static final String DEFAULT_COMPONENT_SIZE_PROPERTY_NAME = "controller.pool-size";

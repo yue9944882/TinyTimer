@@ -3,6 +3,8 @@ package com.kimmin.es.plugin.tiny.task;
 import com.kimmin.es.plugin.tiny.exception.NoSuchTaskException;
 import com.kimmin.es.plugin.tiny.service.RegisterService;
 import com.kimmin.es.plugin.tiny.thread.TimingManager;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.logging.ESLogger;
 import org.elasticsearch.common.logging.Loggers;
 
@@ -24,6 +26,7 @@ public class CycleTimingTask implements Runnable{
         this.milliDelay = milliDelay;
         this.oneTimeTask = oneTimeTask;
         this.taskName = taskName;
+
     }
 
     public void run(){

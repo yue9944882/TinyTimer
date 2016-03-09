@@ -63,7 +63,7 @@ public class QueryTest extends SampleTestCase{
             System.out.println(name);
         }
 
-        MonitorServerStatus.getInstance().delete_7_day_ago_index();
+        //MonitorServerStatus.getInstance().delete_7_day_ago_index();
 
         GetIndexResponse response2 = client.admin().indices().prepareGetIndex()
                 .execute().actionGet();
