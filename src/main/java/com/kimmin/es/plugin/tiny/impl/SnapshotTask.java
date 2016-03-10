@@ -19,7 +19,7 @@ public class SnapshotTask extends AbstractTask {
             public void run() {
                 AnalyzeService.getInstance().snapshot("19300");// Using default 9200 port
             }
-        },this.taskName, TimeDef.MILLI_PER_SECOND);
+        },this.taskName, TimeDef.MILLI_PER_MINUTE);
     }
 
     private final String taskName;

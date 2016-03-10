@@ -13,8 +13,6 @@ import java.util.concurrent.*;
  * Created by kimmin on 3/8/16.
  */
 
-
-
 public class TimingManager {
     /** Singleton **/
     private TimingManager(){}
@@ -23,7 +21,6 @@ public class TimingManager {
     }
 
     public static TimingManager getInstance(){ return Singleton.instance; }
-
 
     /** Constant Variable **/
     public final int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors();
@@ -41,7 +38,14 @@ public class TimingManager {
         /** Disable all tasks **/
         Iterator<String> iter = RegisterService.getInstance().statusMap().keySet().iterator();
         while(iter.hasNext()){
-            RegisterService.getInstance().disableTask(iter.next());
+            String key = iter.next();
+            try{
+                RegisterService.getInstance().disableTask(key);
+            }catch (NoSuchTaskException e){
+                e.printStackTrace();
+                RegisterService.getInstance().statusMap().remove(key);
+                /** And just continue **/
+            }
         }
         /** Confirm tasks in the group is destroyed **/
         try{

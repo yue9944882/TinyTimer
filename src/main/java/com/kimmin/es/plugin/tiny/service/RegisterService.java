@@ -75,8 +75,17 @@ public class RegisterService {
         }
     }
 
-    public void disableTask(String taskName){
-        this.enableMap.put(taskName,false);
+    public void disableTask(String taskName) throws NoSuchTaskException {
+        Boolean enabled = RegisterService.getInstance().getTaskStatusByName(taskName);
+        if(enabled != null) {
+            if(enabled){
+                RegisterService.getInstance().enableMap.put(taskName, false);
+            }else{
+                /** Do nothing here **/
+            }
+        }else{
+            RegisterService.getInstance().enableMap.put(taskName, false);
+        }
     }
 
     public Boolean getTaskStatusByName(String taskName){
