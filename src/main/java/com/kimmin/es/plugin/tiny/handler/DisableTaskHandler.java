@@ -17,7 +17,17 @@ public class DisableTaskHandler implements RestHandler {
     }
 
     public void handleRequest(final RestRequest restRequest, final RestChannel channel){
-        TimingManager.getInstance().shutdown();
+        if(restRequest.hasParam("task")){
+            Boolean enable = RegisterService.getInstance().getTaskStatusByName(restRequest.param("task"));
+            if(enable != null){
+                RegisterService.getInstance().disableTask(restRequest.param("task"));
+                channel.sendResponse(new BytesRestResponse(RestStatus.OK, "Task Disable Success!"));
+            }else{
+                channel.sendResponse(new BytesRestResponse(RestStatus.OK, "NO SUCH TASK!"));
+            }
+        }else {
+            channel.sendResponse(new BytesRestResponse(RestStatus.OK, "Attach Your Task-name!"));
+        }
     }
 
 }

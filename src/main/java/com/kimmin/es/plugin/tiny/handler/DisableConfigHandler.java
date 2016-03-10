@@ -1,5 +1,6 @@
 package com.kimmin.es.plugin.tiny.handler;
 
+import com.kimmin.es.plugin.tiny.thread.TimingManager;
 import com.kimmin.es.plugin.tiny.util.ManyUtil;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.rest.*;
@@ -24,7 +25,13 @@ public class DisableConfigHandler implements RestHandler{
     }
 
     public void handleRequest(final RestRequest restRequest, final RestChannel channel) throws IOException{
-
+        if (TimingManager.getInstance().isStarted()) {
+            TimingManager.getInstance().shutdown();
+            channel.sendResponse(new BytesRestResponse(RestStatus.OK, "Successfully shutdown service"));
+        } else {
+            /** Do nothing here **/
+            channel.sendResponse(new BytesRestResponse(RestStatus.OK, "Service is already shutdown"));
+        }
     }
 
 }

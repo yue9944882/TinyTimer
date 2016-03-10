@@ -25,6 +25,7 @@ public class EnableTaskHandler implements RestHandler{
                     /** Enable & Start **/
                     RegisterService.getInstance().enableTask(restRequest.param("task"));
                     TimingManager.getInstance().startTask(restRequest.param("task"));
+                    channel.sendResponse(new BytesRestResponse(RestStatus.OK, "Task Enable Success!"));
                 }catch (NoSuchTaskException e){
                     e.printStackTrace();
                     channel.sendResponse(new BytesRestResponse(RestStatus.OK, "NO SUCH TASK!"));

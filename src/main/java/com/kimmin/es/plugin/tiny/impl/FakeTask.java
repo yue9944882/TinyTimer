@@ -14,7 +14,7 @@ import com.kimmin.es.plugin.tiny.var.TimeDef;
 public class FakeTask extends AbstractTask{
 
     public FakeTask(){
-        this.taskName = "a fake task";
+        this.taskName = "a_fake_task";
         this.actualTask = new CycleTimingTask(new Runnable() {
             public void run() {
                 System.out.println("Fake Test Heart-beat");

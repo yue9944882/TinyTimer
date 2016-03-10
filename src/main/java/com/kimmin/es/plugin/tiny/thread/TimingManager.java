@@ -21,16 +21,20 @@ public class TimingManager {
     private static class Singleton{
         private static TimingManager instance = new TimingManager();
     }
+
     public static TimingManager getInstance(){ return Singleton.instance; }
+
 
     /** Constant Variable **/
     public final int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors();
 
     private ScheduledExecutorService service = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
 
+    public ThreadGroup taskGroup = new ThreadGroup("Tasks");
+
     public void startTask(String taskName) throws NoSuchTaskException{
         Runner runner = new Runner(taskName);
-        new Thread(runner).start();
+        new Thread(taskGroup, runner).start();
     }
 
     public void shutdown(){
@@ -39,8 +43,15 @@ public class TimingManager {
         while(iter.hasNext()){
             RegisterService.getInstance().disableTask(iter.next());
         }
-        /** Shutdown executors pool **/
-        service.shutdown();
+        /** Confirm tasks in the group is destroyed **/
+        try{
+            taskGroup.destroy();
+        }catch (Throwable e){
+            e.printStackTrace();
+        }finally {
+            /** Shutdown executors pool **/
+            service.shutdown();
+        }
     }
 
     public void start(){
