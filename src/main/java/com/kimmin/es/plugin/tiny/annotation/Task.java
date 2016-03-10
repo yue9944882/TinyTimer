@@ -10,7 +10,5 @@ import java.lang.annotation.*;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Task {
-
     public String taskName() default "default_task_name";
-
 }

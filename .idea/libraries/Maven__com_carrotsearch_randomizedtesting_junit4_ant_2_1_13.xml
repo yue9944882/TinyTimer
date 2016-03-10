@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: com.carrotsearch.randomizedtesting:junit4-ant:2.1.13">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/carrotsearch/randomizedtesting/junit4-ant/2.1.13/junit4-ant-2.1.13.jar!/" />
+      <root url="jar://D:/mavenrepo/com/carrotsearch/randomizedtesting/junit4-ant/2.1.13/junit4-ant-2.1.13.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/carrotsearch/randomizedtesting/junit4-ant/2.1.13/junit4-ant-2.1.13-javadoc.jar!/" />
+      <root url="jar://D:/mavenrepo/com/carrotsearch/randomizedtesting/junit4-ant/2.1.13/junit4-ant-2.1.13-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/carrotsearch/randomizedtesting/junit4-ant/2.1.13/junit4-ant-2.1.13-sources.jar!/" />
+      <root url="jar://D:/mavenrepo/com/carrotsearch/randomizedtesting/junit4-ant/2.1.13/junit4-ant-2.1.13-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
