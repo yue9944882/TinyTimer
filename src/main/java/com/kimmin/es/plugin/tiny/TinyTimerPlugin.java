@@ -12,6 +12,7 @@ import org.elasticsearch.plugins.Plugin;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by kimmin on 3/8/16.
@@ -23,6 +24,7 @@ public class TinyTimerPlugin extends Plugin {
     public static final String DEFAULT_SUITE_PROPERTY_NAME = "suite";
     public static final String DEFAULT_RESOURCES_PROPERTY_NAME = "resources";
     public static final String DEFAULT_COMPONENT_SIZE_PROPERTY_NAME = "controller.pool-size";
+
 
     private final boolean tranportClient;
     private final boolean pluginEnabled;

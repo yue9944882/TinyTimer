@@ -1,5 +1,9 @@
 package com.kimmin.es.plugin.tiny.thread;
 
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.ListeningScheduledExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
 import com.kimmin.es.plugin.tiny.exception.NoSuchTaskException;
 import com.kimmin.es.plugin.tiny.service.RegisterService;
 import com.kimmin.es.plugin.tiny.task.CycleTimingTask;
@@ -25,13 +29,19 @@ public class TimingManager {
     /** Constant Variable **/
     public final int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors();
 
+    /** Legacy Service **/
+    @Deprecated
     private ScheduledExecutorService service = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
+
+    private ListeningScheduledExecutorService listeningService = MoreExecutors.listeningDecorator(service);
+
 
     public ThreadGroup taskGroup = new ThreadGroup("Tasks");
 
     public void startTask(String taskName) throws NoSuchTaskException{
-        Runner runner = new Runner(taskName);
-        new Thread(taskGroup, runner).start();
+        CycleTimingTask task = RegisterService.getInstance().getTaskByName(taskName);
+        ListenableFuture future = listeningService.schedule(task, task.milliDelay, TimeUnit.MILLISECONDS);
+
     }
 
     public void shutdown(){
@@ -66,6 +76,7 @@ public class TimingManager {
         return !service.isShutdown();
     }
 
+    @Deprecated
     private class Runner implements Runnable{
         public Runner(String taskName){
             this.taskName = taskName;
@@ -73,6 +84,7 @@ public class TimingManager {
         private String taskName;
         public void run(){
             try{
+
                 CycleTimingTask task = RegisterService.getInstance().getTaskByName(taskName);
                 Boolean enabled = RegisterService.getInstance().getTaskStatusByName(taskName);
                 while(enabled != null && enabled == true) {
