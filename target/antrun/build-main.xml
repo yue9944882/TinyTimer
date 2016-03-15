@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main" unless="${validate.skip}">
+  <pathconvert pathsep="&#10;" property="validate.patternsFound" setonempty="false" dirsep="/">
+    <fileset dir="D:\git\TinyTimer">
+      <include name="**/*.java"/>
+      <include name="**/*.py"/>
+      <include name="**/*.txt"/>
+      <include name="**/*.xml"/>
+      <include name="**/*.rb"/>
+      <include name="**/*.pl"/>
+      <exclude name="**/org/elasticsearch/cluster/routing/shard_routes.txt"/>
+      <exclude name="**/build/**/*"/>
+      <exclude name="**/target/**/*"/>
+      <exclude name="**/.metadata/**/*"/>
+      <exclude name="**/.idea/**/*"/>
+      <exclude name="**/eclipse-build/**/*"/>
+      <or>
+        <containsregexp expression="\t" casesensitive="no"/>
+        <containsregexp expression="\bno(n|)commit\b" casesensitive="no"/>
+      </or>
+    </fileset>
+    <map to="* " from="D:\git\TinyTimer\"/>
+  </pathconvert>
+  <fail if="validate.patternsFound">The following files contain tabs or
+                                        nocommits:
+${validate.patternsFound}</fail>
+</target>
+</project>

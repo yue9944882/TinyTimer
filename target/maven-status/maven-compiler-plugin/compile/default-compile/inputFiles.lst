@@ -18,6 +18,7 @@ D:\git\TinyTimer\src\main\java\com\kimmin\es\plugin\tiny\TinyTimerModule.java
 D:\git\TinyTimer\src\main\java\com\kimmin\es\plugin\tiny\handler\MailConfigHandler.java
 D:\git\TinyTimer\src\main\java\com\kimmin\es\plugin\tiny\service\RegisterService.java
 D:\git\TinyTimer\src\main\java\com\kimmin\es\plugin\tiny\impl\SnapshotTask.java
+D:\git\TinyTimer\src\main\java\com\kimmin\es\plugin\tiny\hook\TaskFinishHook.java
 D:\git\TinyTimer\src\main\java\com\kimmin\es\plugin\tiny\handler\AnalyzeHandler.java
 D:\git\TinyTimer\src\main\java\com\kimmin\es\plugin\tiny\pressure\Worker.java
 D:\git\TinyTimer\src\main\java\com\kimmin\es\plugin\tiny\task\AbstractTask.java

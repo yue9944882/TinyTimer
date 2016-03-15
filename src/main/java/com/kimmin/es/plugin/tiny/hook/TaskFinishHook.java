@@ -17,7 +17,14 @@ public class TaskFinishHook implements Runnable{
 
     public static void addCycleHook(ListeningScheduledExecutorService service, ListenableFuture future, String taskName){
         /** Let the task get done again & again **/
-        future.addListener(new TaskFinishHook(service, taskName), service);
+        Boolean enabled = RegisterService.getInstance().getTaskStatusByName(taskName);
+        if(enabled != null){
+            if(enabled){
+                future.addListener(new TaskFinishHook(service, taskName), service);
+            }else{
+                /** Just do nothing and this will be the last time for task to execute **/
+            }
+        }
     }
 
     /** Can only be instanced via its PUBLIC STATIC method **/
@@ -33,7 +40,8 @@ public class TaskFinishHook implements Runnable{
     public void run(){
         try {
             CycleTimingTask task = RegisterService.getInstance().getTaskByName(taskName);
-            service.schedule(task, task.milliDelay , TimeUnit.MILLISECONDS);
+            ListenableFuture future = service.schedule(task, task.milliDelay , TimeUnit.MILLISECONDS);
+            addCycleHook(service, future, taskName);
         }catch (NoSuchTaskException e){
             e.printStackTrace();
         }

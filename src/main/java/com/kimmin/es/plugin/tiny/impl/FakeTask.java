@@ -33,6 +33,6 @@ public class FakeTask extends AbstractTask{
     @Override
     public String getTaskName(){
         return taskName;
-    }
+    };
 
 }

@@ -35,6 +35,7 @@ public class TinyTimerComponent extends AbstractLifecycleComponent<TinyTimerComp
 
         /** Scan tasks in the classpath **/
         ImplScanner.scanImpl();
+        /** Delete? **/
         RegisterService.latch.countDown();
     }
 

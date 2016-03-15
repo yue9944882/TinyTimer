@@ -5,6 +5,7 @@ import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.ListeningScheduledExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.kimmin.es.plugin.tiny.exception.NoSuchTaskException;
+import com.kimmin.es.plugin.tiny.hook.TaskFinishHook;
 import com.kimmin.es.plugin.tiny.service.RegisterService;
 import com.kimmin.es.plugin.tiny.task.CycleTimingTask;
 
@@ -41,7 +42,7 @@ public class TimingManager {
     public void startTask(String taskName) throws NoSuchTaskException{
         CycleTimingTask task = RegisterService.getInstance().getTaskByName(taskName);
         ListenableFuture future = listeningService.schedule(task, task.milliDelay, TimeUnit.MILLISECONDS);
-
+        TaskFinishHook.addCycleHook(listeningService, future, taskName);
     }
 
     public void shutdown(){
@@ -64,16 +65,22 @@ public class TimingManager {
             e.printStackTrace();
         }finally {
             /** Shutdown executors pool **/
-            service.shutdown();
+            listeningService.shutdown();
         }
     }
 
     public void start(){
-        service = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
+        /** Potential memory leak danger **/
+        if(listeningService.isShutdown() || listeningService.isTerminated()) {
+            listeningService = MoreExecutors.listeningDecorator(Executors.newScheduledThreadPool(CORE_POOL_SIZE));
+        }else{
+            listeningService.shutdown();
+            listeningService = MoreExecutors.listeningDecorator(Executors.newScheduledThreadPool(CORE_POOL_SIZE));
+        }
     }
 
     public boolean isStarted(){
-        return !service.isShutdown();
+        return !listeningService.isShutdown();
     }
 
     @Deprecated

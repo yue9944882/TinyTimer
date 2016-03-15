@@ -28,7 +28,6 @@ public class CycleTimingTask implements Runnable{
         this.milliDelay = milliDelay;
         this.oneTimeTask = oneTimeTask;
         this.taskName = taskName;
-
     }
 
     public void run() {

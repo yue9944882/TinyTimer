@@ -1,0 +1,10 @@
+com\kimmin\mail\MailSendingTest.class
+com\kimmin\es\plugin\QueryTest.class
+com\kimmin\json\FooTask.class
+com\kimmin\jmeter\PressureTest.class
+com\kimmin\json\TestAnnotation.class
+com\kimmin\json\RestToObj.class
+com\kimmin\es\plugin\SampleTestCase.class
+com\kimmin\es\plugin\SampleDocumentData.class
+com\kimmin\jfreechart\PlotTest.class
+com\kimmin\mail\MailSendingTest$1.class

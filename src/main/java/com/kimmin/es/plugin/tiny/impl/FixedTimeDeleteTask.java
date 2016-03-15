@@ -31,7 +31,7 @@ public class FixedTimeDeleteTask extends AbstractTask {
                         /** Delete 7 day ago's index **/
                         SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd");
                         String dateSuffix = format.format(
-                                new Date(System.currentTimeMillis()-7*TimeDef.MILLI_PER_DAY));
+                                new Date(System.currentTimeMillis()-TimeDef.MILLI_PER_DAY));
                         TinyTimerComponent.getClient().admin().indices().prepareCreate(
                                 "clog_index_" + dateSuffix
                         ).execute().actionGet();

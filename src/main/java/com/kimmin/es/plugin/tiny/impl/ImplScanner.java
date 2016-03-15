@@ -1,5 +1,6 @@
 package com.kimmin.es.plugin.tiny.impl;
 
+import com.kimmin.es.plugin.tiny.TinyTimerPlugin;
 import com.kimmin.es.plugin.tiny.annotation.Task;
 import com.kimmin.es.plugin.tiny.service.RegisterService;
 import com.kimmin.es.plugin.tiny.task.AbstractTask;
@@ -13,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.net.JarURLConnection;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
@@ -33,10 +35,24 @@ public class ImplScanner {
 
         Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
 
-        String pkgName = ImplScanner.class.getPackage().getName();
+        String pkgName = TinyTimerPlugin.class.getPackage().getName();
         String pkgDirName = pkgName.replace('.','/');
+        System.out.println(pkgDirName);
         logger.info("Begin scanning the directory..");
         URL url = Thread.currentThread().getContextClassLoader().getResource(pkgDirName);
+        //ClassLoader c1 = Thread.currentThread().getContextClassLoader();
+
+        /** Test for checking system classpath **/
+        //ClassLoader cl = ClassLoader.getSystemClassLoader();
+        //URL[] urls = ((URLClassLoader)c1).getURLs();
+
+        //for(int i=0; i<urls.length; i++){
+        //    System.out.println(urls[i].toString());
+        //}
+
+
+        //URL url = ImplScanner.class.getClassLoader().getParent().getResource("/");
+        System.out.println(url);
         String protocol = url.getProtocol();
         if(protocol.equals("file")){
             logger.info("FILE protocol.");
@@ -65,8 +81,10 @@ public class ImplScanner {
                         }else{
                             if(name.endsWith(".class")
                                     && !entry.isDirectory()){
+
                                 String className = name.substring(pkgName.length()+1,
                                         name.length()-".class".length());
+                                className = className.replace('/','.');
                                 try{
                                     classes.add(Class.forName(pkgName + "." + className));
                                 }catch (ClassNotFoundException e){
